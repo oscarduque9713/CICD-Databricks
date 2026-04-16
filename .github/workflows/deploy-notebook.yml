@@ -18,7 +18,7 @@ jobs:
         ORIGIN_HOST=${{ secrets.DATABRICKS_ORIGIN_HOST }}
         ORIGIN_TOKEN=${{ secrets.DATABRICKS_ORIGIN_TOKEN }}
         NOTEBOOK_BASE="/Workspace/Users/duque.smart1397@outlook.com/CICD-Databricks/Proceso"
-        NOTEBOOKS=("0.Preparacion_Ambiente" "1.Download_Raw_Data" "2.Ingest_Orders" "2.Ingest_Products" "2.Ingest_Sellers_Customers" "3.Transform_Customers_Sellers" "3.Transform_Orders" "3.Transform_Products" "4.Transform_Orders_end" "5.Load_orders")  # Agrega más según necesitesas
+        NOTEBOOKS=(0.Preparacion_Ambiente" "1.Download_Raw_Data" "2.Ingest_Orders" "2.Ingest_Products" "2.Ingest_Sellers_Customers" "3.Transform_Customers_Sellers" "3.Transform_Orders" "3.Transform_Products" "4.Transform_Orders_end" "5.Load_orders")  # Agrega más según necesitesas
         mkdir -p notebooks_to_deploy
         for nb in "${NOTEBOOKS[@]}"; do
           echo "Exportando $nb en modo raw..."
@@ -59,7 +59,7 @@ jobs:
       run: |
         DEST_HOST=${{ secrets.DATABRICKS_DEST_HOST }}
         DEST_TOKEN=${{ secrets.DATABRICKS_DEST_TOKEN }}
-        WORKFLOW_NAME="WF_ADB_PROD"
+        WORKFLOW_NAME="WF_ADB"
         
         echo "Verificando si existe el workflow: $WORKFLOW_NAME"
         
@@ -83,47 +83,18 @@ jobs:
           echo "No se encontró workflow existente con nombre: $WORKFLOW_NAME"
         fi
     
-    - name: Get existing cluster ID
-      run: |
-        DEST_HOST=${{ secrets.DATABRICKS_DEST_HOST }}
-        DEST_TOKEN=${{ secrets.DATABRICKS_DEST_TOKEN }}
-        CLUSTER_NAME="Cluster_SD"
-        
-        echo "Buscando cluster existente: $CLUSTER_NAME"
-        
-        # Obtener lista de clusters
-        clusters_response=$(curl -s -X GET \
-          -H "Authorization: Bearer $DEST_TOKEN" \
-          "$DEST_HOST/api/2.0/clusters/list")
-        
-        echo "Clusters response: $clusters_response"
-        
-        # Extraer cluster_id del cluster especificado
-        cluster_id=$(echo "$clusters_response" | jq -r --arg name "$CLUSTER_NAME" '.clusters[]? | select(.cluster_name == $name) | .cluster_id')
-        
-        if [ "$cluster_id" != "" ] && [ "$cluster_id" != "null" ]; then
-          echo "✅ Cluster encontrado: $CLUSTER_NAME con ID: $cluster_id"
-          echo "CLUSTER_ID=$cluster_id" >> $GITHUB_ENV
-        else
-          echo "❌ No se encontró el cluster: $CLUSTER_NAME"
-          echo "Clusters disponibles:"
-          echo "$clusters_response" | jq -r '.clusters[]? | .cluster_name'
-          exit 1
-        fi
-    
-    - name: Create Databricks Workflow WF_ADB_PROD
+    - name: Create Databricks Workflow WF_ADB
       run: |
         DEST_HOST=${{ secrets.DATABRICKS_DEST_HOST }}
         DEST_TOKEN=${{ secrets.DATABRICKS_DEST_TOKEN }}
         DEST_BASE="/py/scripts/main"
-        CLUSTER_ID="${{ env.CLUSTER_ID }}"
         
-        echo "Creando workflow: WF_ADB_PROD con cluster existente ID: $CLUSTER_ID"
+        echo "Creando workflow: WF_ADB_PROD"
         
-        # Crear el JSON del workflow usando cluster existente
-        cat > workflow_config.json << EOF
+        # Crear el JSON del workflow
+        cat > workflow_config.json << 'EOF'
         {
-          "name": "WF_ADB_PROD",
+          "name": "WF_ADB",
           "format": "MULTI_TASK",
           "tasks": [
             {
@@ -133,7 +104,7 @@ jobs:
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/0.Preparacion_Ambiente",
                 "source": "WORKSPACE"
               },
-              "existing_cluster_id": "$CLUSTER_ID",
+              "job_cluster_key": "serverless_cluster",
               "timeout_seconds": 3600,
               "max_retries": 2
             },
@@ -144,7 +115,7 @@ jobs:
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/1.Download_Raw_Data",
                 "source": "WORKSPACE"
               },
-              "existing_cluster_id": "$CLUSTER_ID",
+              "job_cluster_key": "serverless_cluster",
               "timeout_seconds": 3600,
               "max_retries": 3,
               "depends_on": [
@@ -160,7 +131,7 @@ jobs:
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/2.Ingest_Orders",
                 "source": "WORKSPACE"
               },
-              "existing_cluster_id": "$CLUSTER_ID",
+              "job_cluster_key": "serverless_cluster",
               "timeout_seconds": 3600,
               "max_retries": 1,
               "depends_on": [
@@ -176,7 +147,7 @@ jobs:
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/2.Ingest_Products",
                 "source": "WORKSPACE"
               },
-              "existing_cluster_id": "$CLUSTER_ID",
+              "job_cluster_key": "serverless_cluster",
               "timeout_seconds": 3600,
               "max_retries": 1,
               "depends_on": [
@@ -192,7 +163,7 @@ jobs:
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/2.Ingest_Sellers_Customers",
                 "source": "WORKSPACE"
               },
-              "existing_cluster_id": "$CLUSTER_ID",
+              "job_cluster_key": "serverless_cluster",
               "timeout_seconds": 3600,
               "max_retries": 1,
               "depends_on": [
@@ -208,7 +179,7 @@ jobs:
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/3.Transform_Customers_Sellers",
                 "source": "WORKSPACE"
               },
-              "existing_cluster_id": "$CLUSTER_ID",
+              "job_cluster_key": "serverless_cluster",
               "timeout_seconds": 3600,
               "max_retries": 1,
               "depends_on": [
@@ -224,7 +195,7 @@ jobs:
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/3.Transform_Orders",
                 "source": "WORKSPACE"
               },
-              "existing_cluster_id": "$CLUSTER_ID",
+              "job_cluster_key": "serverless_cluster",
               "timeout_seconds": 3600,
               "max_retries": 3,
               "depends_on": [
@@ -240,7 +211,7 @@ jobs:
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/3.Transform_Products",
                 "source": "WORKSPACE"
               },
-              "existing_cluster_id": "$CLUSTER_ID",
+              "job_cluster_key": "serverless_cluster",
               "timeout_seconds": 3600,
               "max_retries": 3,
               "depends_on": [
@@ -256,7 +227,7 @@ jobs:
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/4.Transform_Orders_end",
                 "source": "WORKSPACE"
               },
-              "existing_cluster_id": "$CLUSTER_ID",
+              "job_cluster_key": "serverless_cluster",
               "timeout_seconds": 3600,
               "max_retries": 1,
               "depends_on": [
@@ -278,7 +249,7 @@ jobs:
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/5.Load_orders",
                 "source": "WORKSPACE"
               },
-              "existing_cluster_id": "$CLUSTER_ID",
+              "job_cluster_key": "serverless_cluster",
               "timeout_seconds": 3600,
               "max_retries": 1,
               "depends_on": [
@@ -286,6 +257,23 @@ jobs:
                   "task_key": "Transform_Orders_end"
                 }
               ]
+            }
+          ],
+          "job_clusters": [
+            {
+              "job_cluster_key": "serverless_cluster",
+              "new_cluster": {
+                "spark_version": "17.3.x-scala2.13",
+                "node_type_id": "Standard_D4pds_v6",
+                "driver_node_type_id": "Standard_D4pds_v6",
+                "num_workers": 0,
+                "data_security_mode": "SINGLE_USER",
+                "runtime_engine": "STANDARD",
+                "custom_tags": {
+                  "environment": "production",
+                  "team": "data-engineering"
+                }
+              }
             }
           ],
           "schedule": {
@@ -304,8 +292,7 @@ jobs:
           "tags": {
             "environment": "production",
             "created_by": "github_actions",
-            "project": "automated_deployment",
-            "cluster_used": "cluster_SD"
+            "project": "automated_deployment"
           }
         }
         EOF
@@ -323,7 +310,7 @@ jobs:
         job_id=$(echo "$create_response" | jq -r '.job_id')
         
         if [ "$job_id" != "" ] && [ "$job_id" != "null" ]; then
-          echo "✅ Workflow 'WF_ADB_PROD' creado exitosamente con ID: $job_id"
+          echo "Workflow 'WF_ADB' creado exitosamente con ID: $job_id"
           
           # Obtener detalles del workflow creado
           workflow_details=$(curl -s -X GET \
@@ -333,7 +320,7 @@ jobs:
           echo "Detalles del workflow:"
           echo "$workflow_details" | jq '.settings | {name, tasks: (.tasks | map({task_key, notebook_task: .notebook_task.notebook_path}))}'
         else
-          echo "❌ Error al crear el workflow"
+          echo "Error al crear el workflow"
           echo "Response completo: $create_response"
           exit 1
         fi
@@ -342,9 +329,9 @@ jobs:
       run: |
         DEST_HOST=${{ secrets.DATABRICKS_DEST_HOST }}
         DEST_TOKEN=${{ secrets.DATABRICKS_DEST_TOKEN }}
-        WORKFLOW_NAME="WF_ADB_PROD"
+        WORKFLOW_NAME="WF_ADB"
         
-        echo "🔍 Validando la configuración del workflow creado..."
+        echo "Validando la configuración del workflow creado..."
         
         # Obtener lista de workflows y encontrar el recién creado
         workflows_list=$(curl -s -X GET \
@@ -354,26 +341,27 @@ jobs:
         job_id=$(echo "$workflows_list" | jq -r --arg name "$WORKFLOW_NAME" '.jobs[]? | select(.settings.name == $name) | .job_id')
         
         if [ "$job_id" != "" ] && [ "$job_id" != "null" ]; then
-          echo "✅ Workflow encontrado con ID: $job_id"
+          echo "Workflow encontrado con ID: $job_id"
           
           # Obtener configuración detallada
           job_details=$(curl -s -X GET \
             -H "Authorization: Bearer $DEST_TOKEN" \
             "$DEST_HOST/api/2.1/jobs/get?job_id=$job_id")
           
-          echo "📋 Resumen del workflow:"
+          echo "Resumen del workflow:"
           echo "Nombre: $(echo "$job_details" | jq -r '.settings.name')"
           echo "Número de tareas: $(echo "$job_details" | jq '.settings.tasks | length')"
           echo ""
-          echo "📝 Tareas configuradas:"
+          echo "Tareas configuradas:"
           echo "$job_details" | jq -r '.settings.tasks[] | "- " + .task_key + " → " + .notebook_task.notebook_path'
           echo ""
-          echo "🖥️  Cluster configurado:"
-          echo "Cluster ID: $(echo "$job_details" | jq -r '.settings.tasks[0].existing_cluster_id')"
-          echo "Cluster Name: cluster_SD (reutilizado)"
+          echo "Cluster configurado:"
+          echo "Tipo: $(echo "$job_details" | jq -r '.settings.job_clusters[0].new_cluster.node_type_id')"
+          echo "Workers: $(echo "$job_details" | jq -r '.settings.job_clusters[0].new_cluster.num_workers')"
+          echo "Spark Version: $(echo "$job_details" | jq -r '.settings.job_clusters[0].new_cluster.spark_version')"
           
         else
-          echo "❌ No se pudo encontrar el workflow creado"
+          echo "No se pudo encontrar el workflow creado"
           exit 1
         fi
     
@@ -384,14 +372,14 @@ jobs:
     
     - name: Done
       run: |
-        echo "🎉 ¡Despliegue completado exitosamente!"
+        echo "¡Despliegue completado exitosamente!"
         echo ""
         echo "Resumen:"
         echo "Notebooks desplegados: ntbk_1, ntbk_2"
-        echo "Workflow creado: WF_ADB_PROD"
+        echo "Workflow creado: WF_ADB"
         echo "Tareas configuradas:"
         echo "   - tarea1_notebook1 (ntbk_1)"
         echo "   - tarea2_notebook2 (ntbk_2)"
-        echo "Cluster existente: cluster_SD configurado"
+        echo "Cluster: Serverless configurado"
         echo ""
-        echo "🔗 Accede a tu workspace de Databricks para ver el workflow en la sección 'Workflows'"
+        echo "Accede a tu workspace de Databricks para ver el workflow en la sección 'Workflows'"
