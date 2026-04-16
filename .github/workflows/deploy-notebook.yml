@@ -133,7 +133,7 @@ jobs:
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/0.Preparacion_Ambiente",
                 "source": "WORKSPACE"
               },
-              "job_cluster_key": "$CLUSTER_ID",
+              "existing_cluster_id": "$CLUSTER_ID",
               "timeout_seconds": 3600,
               "max_retries": 2
             },
@@ -144,7 +144,7 @@ jobs:
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/1.Download_Raw_Data",
                 "source": "WORKSPACE"
               },
-              "job_cluster_key": "$CLUSTER_ID",
+              "existing_cluster_id": "$CLUSTER_ID",
               "timeout_seconds": 3600,
               "max_retries": 3,
               "depends_on": [
@@ -160,7 +160,7 @@ jobs:
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/2.Ingest_Orders",
                 "source": "WORKSPACE"
               },
-              "job_cluster_key": "$CLUSTER_ID",
+              "existing_cluster_id": "$CLUSTER_ID",
               "timeout_seconds": 3600,
               "max_retries": 1,
               "depends_on": [
@@ -176,7 +176,7 @@ jobs:
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/2.Ingest_Products",
                 "source": "WORKSPACE"
               },
-              "job_cluster_key": "$CLUSTER_ID",
+              "existing_cluster_id": "$CLUSTER_ID",
               "timeout_seconds": 3600,
               "max_retries": 1,
               "depends_on": [
@@ -192,7 +192,7 @@ jobs:
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/2.Ingest_Sellers_Customers",
                 "source": "WORKSPACE"
               },
-              "job_cluster_key": "$CLUSTER_ID",
+              "existing_cluster_id": "$CLUSTER_ID",
               "timeout_seconds": 3600,
               "max_retries": 1,
               "depends_on": [
@@ -208,7 +208,7 @@ jobs:
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/3.Transform_Customers_Sellers",
                 "source": "WORKSPACE"
               },
-              "job_cluster_key": "$CLUSTER_ID",
+              "existing_cluster_id": "$CLUSTER_ID",
               "timeout_seconds": 3600,
               "max_retries": 1,
               "depends_on": [
@@ -224,7 +224,7 @@ jobs:
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/3.Transform_Orders",
                 "source": "WORKSPACE"
               },
-              "job_cluster_key": "$CLUSTER_ID",
+              "existing_cluster_id": "$CLUSTER_ID",
               "timeout_seconds": 3600,
               "max_retries": 3,
               "depends_on": [
@@ -240,7 +240,7 @@ jobs:
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/3.Transform_Products",
                 "source": "WORKSPACE"
               },
-              "job_cluster_key": "$CLUSTER_ID",
+              "existing_cluster_id": "$CLUSTER_ID",
               "timeout_seconds": 3600,
               "max_retries": 3,
               "depends_on": [
@@ -256,7 +256,7 @@ jobs:
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/4.Transform_Orders_end",
                 "source": "WORKSPACE"
               },
-              "job_cluster_key": "$CLUSTER_ID",
+              "existing_cluster_id": "$CLUSTER_ID",
               "timeout_seconds": 3600,
               "max_retries": 1,
               "depends_on": [
@@ -278,7 +278,7 @@ jobs:
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/5.Load_orders",
                 "source": "WORKSPACE"
               },
-              "job_cluster_key": "$CLUSTER_ID",
+              "existing_cluster_id": "$CLUSTER_ID",
               "timeout_seconds": 3600,
               "max_retries": 1,
               "depends_on": [
