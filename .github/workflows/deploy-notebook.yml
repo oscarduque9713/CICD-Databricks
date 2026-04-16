@@ -131,7 +131,17 @@ jobs:
               "description": "Preparacion ambiente para el proceso",
               "notebook_task": {
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/0.Preparacion_Ambiente",
-                "source": "WORKSPACE"
+                "source": "WORKSPACE",
+                "base_parameters": {
+                  "storageName": "adlssmartproject13prod",
+                  "catalogo": "project_prod",
+                  "container": "raw",
+                  "schemaBronze": "bronze",
+                  "schemaSilver": "silver",
+                  "schemaGold": "Gold",
+                  "credential_": "credential_prod"
+                }
+
               },
               "existing_cluster_id": "$CLUSTER_ID",
               "timeout_seconds": 3600,
@@ -142,7 +152,12 @@ jobs:
               "description": "EDescargar la data",
               "notebook_task": {
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/1.Download_Raw_Data",
-                "source": "WORKSPACE"
+                "source": "WORKSPACE",
+                "base_parameters": {
+                  "storageName": "adlssmartproject13prod",
+                  "catalogo": "project_prod",
+                  "container": "raw"
+                }
               },
               "existing_cluster_id": "$CLUSTER_ID",
               "timeout_seconds": 3600,
@@ -158,7 +173,13 @@ jobs:
               "description": "Cargar tablas de orders",
               "notebook_task": {
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/2.Ingest_Orders",
-                "source": "WORKSPACE"
+                "source": "WORKSPACE",
+                "base_parameters": {
+                  "storageName": "adlssmartproject13prod",
+                  "catalogo": "project_prod",
+                  "container": "raw",
+                  "schemaBronze": "bronze"
+                }
               },
               "existing_cluster_id": "$CLUSTER_ID",
               "timeout_seconds": 3600,
@@ -174,7 +195,13 @@ jobs:
               "description": "Ecargar tablas de productos",
               "notebook_task": {
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/2.Ingest_Products",
-                "source": "WORKSPACE"
+                "source": "WORKSPACE",
+                "base_parameters": {
+                  "storageName": "adlssmartproject13prod",
+                  "catalogo": "project_prod",
+                  "container": "raw",
+                  "schemaBronze": "bronze"
+                }
               },
               "existing_cluster_id": "$CLUSTER_ID",
               "timeout_seconds": 3600,
@@ -190,7 +217,13 @@ jobs:
               "description": "cargar tablas de seller y customer",
               "notebook_task": {
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/2.Ingest_Sellers_Customers",
-                "source": "WORKSPACE"
+                "source": "WORKSPACE",
+                "base_parameters": {
+                  "storageName": "adlssmartproject13prod",
+                  "catalogo": "project_prod",
+                  "container": "raw",
+                  "schemaBronze": "bronze"
+                }
               },
               "existing_cluster_id": "$CLUSTER_ID",
               "timeout_seconds": 3600,
@@ -206,7 +239,12 @@ jobs:
               "description": "EDescargar la data",
               "notebook_task": {
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/3.Transform_Customers_Sellers",
-                "source": "WORKSPACE"
+                "source": "WORKSPACE",
+                "base_parameters": {
+                  "catalogo": "project_prod",
+                  "schemaBronze": "bronze",
+                  "schemaSilver": "silver"
+                }
               },
               "existing_cluster_id": "$CLUSTER_ID",
               "timeout_seconds": 3600,
@@ -222,7 +260,12 @@ jobs:
               "description": "transformar orders",
               "notebook_task": {
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/3.Transform_Orders",
-                "source": "WORKSPACE"
+                "source": "WORKSPACE",
+                "base_parameters": {
+                  "catalogo": "project_prod",
+                  "schemaBronze": "bronze",
+                  "schemaSilver": "silver"
+                }
               },
               "existing_cluster_id": "$CLUSTER_ID",
               "timeout_seconds": 3600,
@@ -238,7 +281,12 @@ jobs:
               "description": "transformar products",
               "notebook_task": {
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/3.Transform_Products",
-                "source": "WORKSPACE"
+                "source": "WORKSPACE",
+                "base_parameters": {
+                  "catalogo": "project_prod",
+                  "schemaBronze": "bronze",
+                  "schemaSilver": "silver"
+                }
               },
               "existing_cluster_id": "$CLUSTER_ID",
               "timeout_seconds": 3600,
@@ -254,7 +302,11 @@ jobs:
               "description": "transformar orders final",
               "notebook_task": {
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/4.Transform_Orders_end",
-                "source": "WORKSPACE"
+                "source": "WORKSPACE",
+                "base_parameters": {
+                  "catalogo": "project_prod",
+                  "schemaSilver": "silver"
+                }
               },
               "existing_cluster_id": "$CLUSTER_ID",
               "timeout_seconds": 3600,
@@ -276,7 +328,12 @@ jobs:
               "description": "cargar tabla final",
               "notebook_task": {
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/5.Load_orders",
-                "source": "WORKSPACE"
+                "source": "WORKSPACE",
+                "base_parameters": {
+                  "catalogo": "project_prod",
+                  "schemaSilver": "silver",
+                  "schemaGold": "gold"
+                }
               },
               "existing_cluster_id": "$CLUSTER_ID",
               "timeout_seconds": 3600,
@@ -305,7 +362,7 @@ jobs:
             "environment": "production",
             "created_by": "github_actions",
             "project": "automated_deployment",
-            "cluster_used": "Cluster_SD"
+            "cluster_used": "cluster_SD"
           }
         }
         EOF
