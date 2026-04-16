@@ -18,7 +18,7 @@ jobs:
         ORIGIN_HOST=${{ secrets.DATABRICKS_ORIGIN_HOST }}
         ORIGIN_TOKEN=${{ secrets.DATABRICKS_ORIGIN_TOKEN }}
         NOTEBOOK_BASE="/Workspace/Users/duque.smart1397@outlook.com/CICD-Databricks/Proceso"
-        NOTEBOOKS=(0.Preparacion_Ambiente" "1.Download_Raw_Data" "2.Ingest_Orders" "2.Ingest_Products" "2.Ingest_Sellers_Customers" "3.Transform_Customers_Sellers" "3.Transform_Orders" "3.Transform_Products" "4.Transform_Orders_end" "5.Load_orders")  # Agrega más según necesitesas
+        NOTEBOOKS=("0.Preparacion_Ambiente" "1.Download_Raw_Data" "2.Ingest_Orders" "2.Ingest_Products" "2.Ingest_Sellers_Customers" "3.Transform_Customers_Sellers" "3.Transform_Orders" "3.Transform_Products" "4.Transform_Orders_end" "5.Load_orders")  # Agrega más según necesitesas
         mkdir -p notebooks_to_deploy
         for nb in "${NOTEBOOKS[@]}"; do
           echo "Exportando $nb en modo raw..."
