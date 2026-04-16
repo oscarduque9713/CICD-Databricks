@@ -118,7 +118,7 @@ jobs:
         DEST_BASE="/py/scripts/main"
         CLUSTER_ID="${{ env.CLUSTER_ID }}"
         
-        echo "Creando workflow: WF_ADB con cluster existente ID: $CLUSTER_ID"
+        echo "Creando workflow: WF_ADB_PROD con cluster existente ID: $CLUSTER_ID"
         
         # Crear el JSON del workflow usando cluster existente
         cat > workflow_config.json << EOF
@@ -323,7 +323,7 @@ jobs:
         job_id=$(echo "$create_response" | jq -r '.job_id')
         
         if [ "$job_id" != "" ] && [ "$job_id" != "null" ]; then
-          echo "✅ Workflow 'WF_ADB' creado exitosamente con ID: $job_id"
+          echo "✅ Workflow 'WF_ADB_PROD' creado exitosamente con ID: $job_id"
           
           # Obtener detalles del workflow creado
           workflow_details=$(curl -s -X GET \
@@ -342,7 +342,7 @@ jobs:
       run: |
         DEST_HOST=${{ secrets.DATABRICKS_DEST_HOST }}
         DEST_TOKEN=${{ secrets.DATABRICKS_DEST_TOKEN }}
-        WORKFLOW_NAME="WF_ADB"
+        WORKFLOW_NAME="WF_ADB_PROD"
         
         echo "🔍 Validando la configuración del workflow creado..."
         
@@ -388,7 +388,7 @@ jobs:
         echo ""
         echo "Resumen:"
         echo "Notebooks desplegados: ntbk_1, ntbk_2"
-        echo "Workflow creado: WF_ADB"
+        echo "Workflow creado: WF_ADB_PROD"
         echo "Tareas configuradas:"
         echo "   - tarea1_notebook1 (ntbk_1)"
         echo "   - tarea2_notebook2 (ntbk_2)"
