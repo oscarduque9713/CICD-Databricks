@@ -168,30 +168,6 @@ jobs:
                 }
               ]
             },
-            {
-              "task_key": "Grants",
-              "description": "Grant Permissions",
-              "notebook_task": {
-                "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/Grants_Medallion",
-                "source": "WORKSPACE",
-                "base_parameters": {
-                  "storageName": "adlssmartproject13prod",
-                  "catalogo": "project_prod",
-                  "container": "raw",
-                  "schemaBronze": "bronze",
-                  "schemaSilver": "silver",
-                  "schemaGold": "gold"
-                }
-              },
-              "existing_cluster_id": "$CLUSTER_ID",
-              "timeout_seconds": 3600,
-              "max_retries": 1,
-              "depends_on": [
-                {
-                  "task_key": "Prep_Amb"
-                }
-              ]
-            },
              {
               "task_key": "Ingest_Orders",
               "description": "Cargar tablas de orders",
@@ -211,9 +187,6 @@ jobs:
               "depends_on": [
                 {
                   "task_key": "Download_Data"
-                },
-                {
-                  "task_key": "Grants"
                 }
               ]
             },
@@ -236,9 +209,6 @@ jobs:
               "depends_on": [
                 {
                   "task_key": "Download_Data"
-                },
-                {
-                  "task_key": "Grants"
                 }
               ]
             },
@@ -261,9 +231,6 @@ jobs:
               "depends_on": [
                 {
                   "task_key": "Download_Data"
-                },
-                {
-                  "task_key": "Grants"
                 }
               ]
             },
@@ -374,6 +341,30 @@ jobs:
               "depends_on": [
                 {
                   "task_key": "Transform_Orders_end"
+                }
+              ]
+            }
+            {
+              "task_key": "Grants",
+              "description": "Grant Permissions",
+              "notebook_task": {
+                "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/Grants_Medallion",
+                "source": "WORKSPACE",
+                "base_parameters": {
+                  "storageName": "adlssmartproject13prod",
+                  "catalogo": "project_prod",
+                  "container": "raw",
+                  "schemaBronze": "bronze",
+                  "schemaSilver": "silver",
+                  "schemaGold": "gold"
+                }
+              },
+              "existing_cluster_id": "$CLUSTER_ID",
+              "timeout_seconds": 3600,
+              "max_retries": 1,
+              "depends_on": [
+                {
+                  "task_key": "Load_Orders"
                 }
               ]
             }
