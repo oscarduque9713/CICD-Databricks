@@ -176,7 +176,7 @@ jobs:
               "task_key": "Grants",
               "description": "Grant Permissions",
               "notebook_task": {
-                "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/Grant_Permissions",
+                "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/Grants_Medallion",
                 "source": "WORKSPACE",
                 "base_parameters": {
                   "catalogo": "project_prod",
