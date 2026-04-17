@@ -26,6 +26,14 @@ Flujo de Datos
 ![](./Imagenes/Gemini_Generated_Image_i6skvdi6skvdi6sk.png "Gemini_Generated_Image_i6skvdi6skvdi6sk.png")
 
 
+##⚙️ Configuración del Cluster (Pre-requisitos)
+
+Debido a que el despliegue utiliza clusters existentes en los entornos de Dev y Prod, es necesario realizar una configuración manual única para asegurar que el motor de Spark pueda comunicarse con Kaggle.
+
+📦 Instalación de Librerías kaggle
+
+**Nota**: Este paso es obligatorio antes de ejecutar el Workflow, ya que el archivo .yml de configuración de tareas hace referencia a un cluster gestionado manualmente para optimizar los recursos de la suscripción.
+
 ##🛠️ Configuración del Entorno (Setup)
 Para que el pipeline de CI/CD funcione correctamente, sigue estos pasos de configuración:
 
@@ -37,14 +45,6 @@ kaggle-key: Token de la API de Kaggle.
 kaggle-user: User de Kaggle.
 
 2️⃣ Generar Databricks TokenPara permitir que GitHub Actions se comunique con tu Workspace:
-
-1. Entra a tu Databricks Workspace.
-2. Ve a User Settings → Developer → Access Tokens.
-3. Haz clic en Generate New Token.
-4. Configuración:
-* Comment: GitHub CI/CD
-* Lifetime: 90 days (recomendado).
-5.⚠️ Importante: Copia y guarda el token de inmediato; no podrás verlo de nuevo.
 
 3️⃣ Configurar GitHub Secrets
 
@@ -77,4 +77,14 @@ Deployment: La Databricks REST API actualiza los Workflows en producción autom�
 
 ![](./Imagenes/Explicacion_capas.png)
 
+## 🔄 Workflow Databricks
 
+[](./Evidencias/WF_PROD_ETL.png)
+
+⏰ Schedule: Diario 4:00 AM (Bogota) ⏱️ Timeout total: 25 Minutos 🔒 Max concurrent runs: 2
+
+📈 Dashboards
+https://github.com/oscarduque9713/CICD-Databricks/tree/main/Dashboard
+
+👤 Autor
+Oscar Eduardo Duque Ospina
