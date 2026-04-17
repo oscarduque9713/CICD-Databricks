@@ -33,4 +33,4 @@ Flujo de Datos
 ↓
 📊 BI Dashboards (Visualización)
 
-![Gemini_Generated_Image_i6skvdi6skvdi6sk.png](./Gemini_Generated_Image_i6skvdi6skvdi6sk.png "Gemini_Generated_Image_i6skvdi6skvdi6sk.png")
+![Gemini_Generated_Image_i6skvdi6skvdi6sk.png](./Imagenes/Gemini_Generated_Image_i6skvdi6skvdi6sk.png "Gemini_Generated_Image_i6skvdi6skvdi6sk.png")
