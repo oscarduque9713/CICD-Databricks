@@ -343,7 +343,7 @@ jobs:
                   "task_key": "Transform_Orders_end"
                 }
               ]
-            }
+            },
             {
               "task_key": "Grants",
               "description": "Grant Permissions",
