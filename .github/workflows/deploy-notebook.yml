@@ -156,11 +156,7 @@ jobs:
                 "base_parameters": {
                   "storageName": "adlssmartproject13prod",
                   "catalogo": "project_prod",
-                  "container": "raw",
-                  "schemaBronze": "bronze",
-                  "schemaSilver": "silver",
-                  "schemaGold": "gold",
-                  "credential_": "credential_prod"
+                  "container": "raw"
                 }
               },
               "existing_cluster_id": "$CLUSTER_ID",
@@ -179,7 +175,10 @@ jobs:
                 "notebook_path": "/Workspace/Users/duque.smart1397@outlook.com/deploy/Grants_Medallion",
                 "source": "WORKSPACE",
                 "base_parameters": {
+                  "storageName": "adlssmartproject13prod",
                   "catalogo": "project_prod",
+                  "container": "raw",
+                  "schemaBronze": "bronze",
                   "schemaSilver": "silver",
                   "schemaGold": "gold"
                 }
