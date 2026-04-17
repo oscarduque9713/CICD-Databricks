@@ -77,4 +77,14 @@ Deployment: La Databricks REST API actualiza los Workflows en producción autom�
 
 ![](./Imagenes/Explicacion_capas.png)
 
+## 🔄 Workflow Databricks
 
+[](./Evidencias/WF_PROD_ETL.png)
+
+⏰ Schedule: Diario 4:00 AM (Bogota) ⏱️ Timeout total: 30 horas 🔒 Max concurrent runs: 2
+
+📈 Dashboards
+https://github.com/oscarduque9713/CICD-Databricks/tree/main/Dashboard
+
+👤 Autor
+Oscar Eduardo Duque Ospina
