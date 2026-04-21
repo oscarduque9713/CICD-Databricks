@@ -1,77 +1,96 @@
 
 # 🛒 ETL Ecommerce Brazilian
 
-Pipeline automatizado de datos para análisis de ordenes y la suma de las ventas en Brasil con arquitectura de tres capas y despliegue continuo.
+Pipeline automatizado de datos para el análisis de órdenes y ventas en Brasil, utilizando una arquitectura de datos moderna basada en Lakehouse, despliegue continuo (CI/CD) y compartición segura de datos.
 
-##🎯 Descripción
+##🎯 Resumen del Proyecto
 
-Este proyecto implementa un pipeline ETL que procesa datos de órdenes, clientes y vendedores. Utiliza la Arquitectura Medallion (Bronze-Silver-Gold) con una capa inicial Raw para la ingesta desde la API de Kaggle. Todo el ciclo de vida está automatizado con GitHub Actions y asegurado con Azure Key Vault.
+Este ecosistema transforma datos crudos de e-commerce en insights accionables. El flujo comienza con la ingesta desde la API de Kaggle, transita por una Arquitectura Medallion en Azure Databricks y finaliza con un tablero en Power BI conectado mediante Delta Sharing.
 
 ##✨ Características Principales
 
-🔄 ETL Automatizado - Pipeline completo vía GitHub Actions.
+- 🔄 ETL Automatizado: Ingesta desde Kaggle API y procesamiento orquestado.
 
-🏗️ Arquitectura Medallion - Flujo estructurado: Raw → Bronze → Silver → Gold.
+- 🏗️ Arquitectura Medallion: Capas Raw → Bronze → Silver → Gold.
 
-📊 Modelo Dimensional - Transformación a One Big Table optimizada para analítica.
+- 🚀 CI/CD: Despliegue automático usando Databricks Asset Bundles y GitHub Actions.
 
-🚀 CI/CD Nativo - Despliegue automático en cada push a la rama main.
+- 🔐 Seguridad Robusta: Integración nativa con Azure Key Vault para manejo de secretos.
 
-⚡ Delta Lake - Garantía de transacciones ACID y Time Travel.
+- 📊 Consumo Analytics: Conectividad avanzada con Power BI a través de Delta Sharing.
 
-🔐 Seguridad Enterprise - Gestión de secretos con Azure Key Vault.
+- ⚡ Delta Lake: Transacciones ACID, Schema Enforcement y Time Travel.
 
 ## 🏛️ Arquitectura del Sistema
 Flujo de Datos
 ![](./Imagenes/Gemini_Generated_Image_i6skvdi6skvdi6sk.png "Gemini_Generated_Image_i6skvdi6skvdi6sk.png")
 
+Ciclo de Vida del Dato
 
-##⚙️ Configuración del Cluster (Pre-requisitos)
+  1. Ingesta (Raw): Descarga vía API de Kaggle, almacenamiento en Databricks Volumes y persistencia en Azure Data Lake Gen2 (ADLS).
 
-Debido a que el despliegue utiliza clusters existentes en los entornos de Dev y Prod, es necesario realizar una configuración manual única para asegurar que el motor de Spark pueda comunicarse con Kaggle.
+  2. Validación (Bronze): Datos crudos en formato Delta con metadatos de auditoría.
 
-📦 Instalación de Librerías kaggle
+  3. Refinado (Silver): Limpieza, tipado y modelado dimensional.
 
-**Nota**: Este paso es obligatorio antes de ejecutar el Workflow, ya que el archivo .yml de configuración de tareas hace referencia a un cluster gestionado manualmente para optimizar los recursos de la suscripción.
+  4. Agregación (Gold): Creación de la One Big Table (OBT) optimizada para negocio.
 
-##🛠️ Configuración del Entorno (Setup)
-Para que el pipeline de CI/CD funcione correctamente, sigue estos pasos de configuración:
+  5. Exposición: Uso de Delta Sharing para servir datos a Power BI sin mover archivos.
 
-1️⃣ Configurar Azure Key Vault
-Los secretos sensibles se gestionan fuera del código:
+##⚙️ Pre-requisitos y Configuración
 
-kaggle-key: Token de la API de Kaggle.
+1. Configuración del Cluster
 
-kaggle-user: User de Kaggle.
+Debido al uso de una suscripción gratuita, se utilizan clusters existentes (All-Purpose) para optimizar costos.
 
-2️⃣ Generar Databricks TokenPara permitir que GitHub Actions se comunique con tu Workspace:
+  - Librerías: Es obligatorio instalar manualmente la librería kaggle vía PyPI en los clusters de Dev y Prod.
 
-3️⃣ Configurar GitHub Secrets
+  - Nota: El archivo .yml de orquestación apunta a los IDs de estos clusters pre-configurados.
 
-Registrar las credenciales en tu repositorio de GitHub para habilitar el despliegue automático:
-* Settings → Secrets and variables → Actions.
-* Crear los siguientes Repository Secrets:
-  * DATABRICKS_HOST https://adb-xxxxx.azuredatabricks.netURL de la instancia de Databricks.
-  * DATABRICKS_TOKEN api_xxxxxxxxxxxxxxxxxxxxxxEl token generado en el paso anterior.
+2. Seguridad (Azure Key Vault)
 
-🚀 Ciclo de Vida y Producción (CI/CD)
-El proyecto gestiona la transición entre entornos de forma dinámica mediante el archivo .yml de configuración.
+Configura un Secret Scope en Databricks vinculado a Key Vault con los siguientes secretos:
 
-🔄 Multi-Entorno (Environment Switching)
-El pipeline detecta el entorno y apunta al Data Lake correspondiente:
+  - kaggle-user: Nombre de usuario de la API.
+
+  - kaggle-key: Token de acceso de la API.
+
+3. CI/CD Setup (GitHub Secrets)
+
+Para habilitar el despliegue automático, configura estos secretos en tu repositorio:
+
+  - DATABRICKS_HOST: URL de tu workspace (ej. https://adb-xxx.azuredatabricks.net).
+
+  - DATABRICKS_TOKEN: Token de acceso generado en User Settings.
+
+
+##🚀 Despliegue y Orquestación
+
+###Multi-Entorno dinámico
+
+El pipeline identifica el entorno y conmuta los endpoints del Data Lake automáticamente:
 
 Dev: abfss://raw@adlssmartprojectdev13.dfs.core.windows.net/
 
 Prod: abfss://raw@adlssmartproject13prod.dfs.core.windows.net/
 
-🛠️ Flujo de GitHub Actions
-Al realizar un merge a main, se dispara el siguiente proceso:
+###Workflow en Producción
 
-Linting & Testing: Validación de sintaxis y lógica en los Notebooks.
+⏰ Horario: Diario 04:00 AM (Bogotá).
 
-Asset Bundles (DABs): Empaquetado de recursos y configuración de Jobs.
+⏱️ SLA: ~25 Minutos.
 
-Deployment: La Databricks REST API actualiza los Workflows en producción automáticamente.
+🔒 Concurrencia: Máximo 2 ejecuciones.
+
+## 📈 Visualización y Entrega de Datos
+El cierre del pipeline se realiza en Power BI, utilizando una arquitectura desacoplada:
+
+- Método de Conexión: Delta Sharing (Protocolo abierto para compartir datos).
+
+- Beneficio: Acceso en tiempo real a la capa Gold sin necesidad de refrescos de extracción pesados.
+
+- Dashboard:  ![](./Dashboard/BI_orders.png) 
+https://github.com/oscarduque9713/CICD-Databricks/tree/main/Dashboard
 
 ##📂 Estructura del Data Lake (ADLS Gen2)
 
@@ -79,12 +98,8 @@ Deployment: La Databricks REST API actualiza los Workflows en producción autom�
 
 ## 🔄 Workflow Databricks
 
-[](./Evidencias/WF_PROD_ETL.png)
+![](./Evidencias/WF_PROD_ETL.png)
 
-⏰ Schedule: Diario 4:00 AM (Bogota) ⏱️ Timeout total: 25 Minutos 🔒 Max concurrent runs: 2
+###👤 Autor
 
-📈 Dashboards
-https://github.com/oscarduque9713/CICD-Databricks/tree/main/Dashboard
-
-👤 Autor
 Oscar Eduardo Duque Ospina
