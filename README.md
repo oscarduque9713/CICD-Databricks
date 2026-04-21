@@ -3,11 +3,11 @@
 
 Pipeline automatizado de datos para el análisis de órdenes y ventas en Brasil, utilizando una arquitectura de datos moderna basada en Lakehouse, despliegue continuo (CI/CD) y compartición segura de datos.
 
-##🎯 Resumen del Proyecto
+## 🎯 Resumen del Proyecto
 
 Este ecosistema transforma datos crudos de e-commerce en insights accionables. El flujo comienza con la ingesta desde la API de Kaggle, transita por una Arquitectura Medallion en Azure Databricks y finaliza con un tablero en Power BI conectado mediante Delta Sharing.
 
-##✨ Características Principales
+## ✨ Características Principales
 
 - 🔄 ETL Automatizado: Ingesta desde Kaggle API y procesamiento orquestado.
 
@@ -37,7 +37,7 @@ Ciclo de Vida del Dato
 
   5. Exposición: Uso de Delta Sharing para servir datos a Power BI sin mover archivos.
 
-##⚙️ Pre-requisitos y Configuración
+## ⚙️ Pre-requisitos y Configuración
 
 1. Configuración del Cluster
 
@@ -64,9 +64,9 @@ Para habilitar el despliegue automático, configura estos secretos en tu reposit
   - DATABRICKS_TOKEN: Token de acceso generado en User Settings.
 
 
-##🚀 Despliegue y Orquestación
+## 🚀 Despliegue y Orquestación
 
-###Multi-Entorno dinámico
+### Multi-Entorno dinámico
 
 El pipeline identifica el entorno y conmuta los endpoints del Data Lake automáticamente:
 
@@ -74,7 +74,7 @@ Dev: abfss://raw@adlssmartprojectdev13.dfs.core.windows.net/
 
 Prod: abfss://raw@adlssmartproject13prod.dfs.core.windows.net/
 
-###Workflow en Producción
+### Workflow en Producción
 
 ⏰ Horario: Diario 04:00 AM (Bogotá).
 
@@ -92,14 +92,17 @@ El cierre del pipeline se realiza en Power BI, utilizando una arquitectura desac
 - Dashboard:  ![](./Dashboard/BI_orders.png) 
 https://github.com/oscarduque9713/CICD-Databricks/tree/main/Dashboard
 
-##📂 Estructura del Data Lake (ADLS Gen2)
+
+## 📂 Estructura del Data Lake (ADLS Gen2)
 
 ![](./Imagenes/Explicacion_capas.png)
+
 
 ## 🔄 Workflow Databricks
 
 ![](./Evidencias/WF_PROD_ETL.png)
 
-###👤 Autor
+
+### 👤 Autor
 
 Oscar Eduardo Duque Ospina
