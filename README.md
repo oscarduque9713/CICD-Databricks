@@ -92,13 +92,16 @@ El cierre del pipeline se realiza en Power BI, utilizando una arquitectura desac
 - Dashboard:  ![](./Dashboard/BI_orders.png) 
 https://github.com/oscarduque9713/CICD-Databricks/tree/main/Dashboard
 
+
 ##📂 Estructura del Data Lake (ADLS Gen2)
 
 ![](./Imagenes/Explicacion_capas.png)
 
+
 ## 🔄 Workflow Databricks
 
 ![](./Evidencias/WF_PROD_ETL.png)
+
 
 ###👤 Autor
 
