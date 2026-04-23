@@ -23,7 +23,25 @@ Este ecosistema transforma datos crudos de e-commerce en insights accionables. E
 
 ## 🏛️ Arquitectura del Sistema
 Flujo de Datos
-![](./Imagenes/Gemini_Generated_Image_i6skvdi6skvdi6sk.png "Gemini_Generated_Image_i6skvdi6skvdi6sk.png")
+![](./Imagenes/diagrama_proceso.png")
+
+📂 Estructura del Proyecto
+La organización del repositorio sigue las mejores prácticas de modularización para proyectos de Ingeniería de Datos en Databricks:
+
+databricks_project/
+├── notebooks/                   # Lógica de transformación Spark
+│   ├── bronze/
+│   │   └── 01_ingest_raw.py     # Ingesta desde Volume/Raw a Delta
+│   ├── silver/
+│   │   └── 02_clean_transform.py # Limpieza y normalización
+│   └── gold/
+│       └── 03_aggregate_metrics.py # Modelado dimensional (OBT)
+├── config/                      # Configuraciones globales
+│   └── settings.py              # Variables de entorno y rutas ADLS
+├── .github/                     # Automatización CI/CD
+│   └── workflows/
+│       └── databricks_cicd.yml  # Definición del pipeline de despliegue
+└── README.md                    # Documentación del proyecto
 
 Ciclo de Vida del Dato
 
