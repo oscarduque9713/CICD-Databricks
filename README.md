@@ -58,7 +58,7 @@ Flujo de Datos
 └── README.md         # Guía principal del proyecto y documentación técnica.
 ```
 
-Ciclo de Vida del Dato
+## Ciclo de Vida del Dato
 
   1. Ingesta (Raw): Descarga vía API de Kaggle, almacenamiento en Databricks Volumes y persistencia en Azure Data Lake Gen2 (ADLS).
 
