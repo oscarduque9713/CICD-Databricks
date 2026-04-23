@@ -23,25 +23,40 @@ Este ecosistema transforma datos crudos de e-commerce en insights accionables. E
 
 ## 🏛️ Arquitectura del Sistema
 Flujo de Datos
-![](./Imagenes/diagrama_proceso.png")
+![](./Imagenes/diagrama_proceso.png)
 
-📂 Estructura del Proyecto
-La organización del repositorio sigue las mejores prácticas de modularización para proyectos de Ingeniería de Datos en Databricks:
+##📂 Estructura del Repositorio
 
-databricks_project/
-├── notebooks/                   # Lógica de transformación Spark
+```databricks_project/
+├── Proceso/                   # Lógica central del Pipeline de Datos (Spark/Python).
+│   ├── Preparacion Ambiente/
+│   │   └── 0.Preparacion_Ambiente # Configuración de Unity Catalog: External Locations, Schemas y Volumes.
+│   ├── Raw/
+│   │   └── 1.Download_Raw_Data # Ingesta vía Kaggle API hacia Databricks Volumes y ADLS Gen2 (Capa RAW).
 │   ├── bronze/
-│   │   └── 01_ingest_raw.py     # Ingesta desde Volume/Raw a Delta
+│   │   └── 2.Ingest_Orders.py # Ingesta Delta: Procesamiento de Orders, Payments y Reviews.
+│   │   └── 2.Ingest_Products # Ingesta Delta: Catálogo de productos y traducciones.
+│   │   └── 2.Ingest_Sellers_Customers # Ingesta Delta: Datos de Clientes, Vendedores y Geolocalización.
 │   ├── silver/
-│   │   └── 02_clean_transform.py # Limpieza y normalización
+│   │   └── 3.Transform_Orders.py # Limpieza y normalización: Creación de Fact Table (Orders).
+│   │   └── 3.Transform_Customers_Sellers.py # Modelado dimensional: Dimensiones de Customers y Sellers.
+│   │   └── 3.Transform_Products.py # Transformación de catálogo y creación de dimensión Products.
+│   │   └── 4.Transform_Orders_end.py # Integración final: Consolidación en "One Big Table" (OBT).
 │   └── gold/
-│       └── 03_aggregate_metrics.py # Modelado dimensional (OBT)
-├── config/                      # Configuraciones globales
-│   └── settings.py              # Variables de entorno y rutas ADLS
-├── .github/                     # Automatización CI/CD
-│   └── workflows/
-│       └── databricks_cicd.yml  # Definición del pipeline de despliegue
-└── README.md                    # Documentación del proyecto
+│       └── 5.Load_orders.py # Capa de consumo: Agregaciones finales para Power BI.
+│   └── grants/
+│       └── Grants_Medallion.py # RBAC: Control de accesos y permisos sobre objetos de datos.
+├── datasets/         # Archivos fuente (CSV) utilizados para la carga inicial.                              
+├── .github/          # CI/CD: Pipeline automatizado para despliegue de notebooks.
+├── dashboard/        # Entregables de BI: Archivo .pbix y captura del reporte final.                
+├── certificaciones/  # Evidencias: Documentación de logros y credenciales técnicas.                
+├── PrepAmb/          # Scripts de respaldo para aprovisionamiento de infraestructura.               
+├── Reversion/        # Mantenimiento: Script de limpieza y eliminación (Drop/Purge).               
+├── Seguridad/        # Gobierno de datos: Gestión de Delta Sharing y permisos avanzados.            
+├── Evidencias/       # Documentación visual del despliegue exitoso en Azure/Databricks.
+├── Imagenes/         # Activos visuales utilizados en la documentación del README.
+└── README.md         # Guía principal del proyecto y documentación técnica.
+```
 
 Ciclo de Vida del Dato
 
