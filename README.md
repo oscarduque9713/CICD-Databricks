@@ -25,7 +25,7 @@ Este ecosistema transforma datos crudos de e-commerce en insights accionables. E
 Flujo de Datos
 ![](./Imagenes/diagrama_proceso.png)
 
-##📂 Estructura del Repositorio
+## 📂 Estructura del Repositorio
 
 ```databricks_project/
 ├── Proceso/                   # Lógica central del Pipeline de Datos (Spark/Python).
