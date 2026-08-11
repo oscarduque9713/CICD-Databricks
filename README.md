@@ -13,7 +13,7 @@ Este ecosistema transforma datos crudos de e-commerce en insights accionables. E
 
 - 🏗️ Arquitectura Medallion: Capas Raw → Bronze → Silver → Gold.
 
-- 🚀 CI/CD: Despliegue automático usando Databricks Asset Bundles y GitHub Actions.
+- 🚀 CI/CD: Despliegue automático usando GitHub Actions.
 
 - 🔐 Seguridad Robusta: Integración nativa con Azure Key Vault para manejo de secretos.
 
